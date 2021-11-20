@@ -46,7 +46,13 @@ class NativeAdmobFlutterPlugin : FlutterPlugin, ActivityAware, MethodCallHandler
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
             "initialize" -> {
-                MobileAds.initialize(activity) { result.success(Build.VERSION.SDK_INT) }
+                try {
+                    MobileAds.initialize(activity)
+                } catch (e: Exception) {
+                    // error
+                } finally {
+                    result.success(Build.VERSION.SDK_INT)
+                }
             }
             // Native Ads Controller
             "initNativeAdController" -> {
